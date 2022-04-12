@@ -35,12 +35,12 @@ cursor.execute(user_table)
 machine_info_table = """CREATE TABLE IF NOT EXISTS public.machine_info
                 (
                     user_id integer NOT NULL UNIQUE,
-                    machine_name character varying DEFAULT NONE ,
-                    platform character varying DEFAULT NONE,
-                    platform_version character varying DEFAULT NONE,
-                    cpu_info character varying DEFAULT NONE,
-                    battery_info character varying DEFAULT NONE,
-                    ram_info character varying DEFAULT NONE,
+                    machine_name character varying DEFAULT NULL ,
+                    platform character varying DEFAULT NULL ,
+                    platform_version character varying DEFAULT NULL ,
+                    cpu_info character varying DEFAULT NULL ,
+                    battery_info character varying DEFAULT NULL ,
+                    ram_info character varying DEFAULT NULL ,
                     PRIMARY KEY (user_id),
                     CONSTRAINT user_id FOREIGN KEY (user_id)
                         REFERENCES public.users (user_id) MATCH SIMPLE
