@@ -9,9 +9,10 @@ router = APIRouter(prefix="/users", tags=["Users"])
 def signup(user: schemas.Signup):
     user.password = passutil.encrypt_password(user.password)
     try:
-        database.cursor.execute("INSERT INTO users (user_name, email_address, password) VALUES (%s, %s, %s) RETURNING user_name, email_address", 
+        database.cursor.execute("INSERT INTO users (user_name, email_address, password) VALUES (%s, %s, %s) RETURNING user_id, user_name, email_address", 
                                 [user.username, user.email, user.password])
         new_user = database.cursor.fetchone()
+        database.cursor.execute("INSERT INTO machine_info (user_id) VALUES (%s)", [new_user["user_id"]])
         database.conn.commit()
         return new_user
 
