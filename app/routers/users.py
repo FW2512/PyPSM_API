@@ -27,8 +27,8 @@ def login(user_info: schemas.login):
     recived_user_info = database.cursor.fetchone()
     if recived_user_info:
         if passutil.password_validation(user_info.password, recived_user_info["password"]):
-            access_token = oauth2.create_jwt_token({"id": recived_user_info["user_id"], 
-                                     "email": recived_user_info["email_address"]})
+            access_token = oauth2.create_jwt_token({"id": recived_user_info.get("user_id"), 
+                                     "email": recived_user_info.get("email_address")})
             return {"access_token": access_token, "token_type": "bearer"}
         else:
             raise HTTPException(status.HTTP_403_FORBIDDEN, detail="Invaild password!")
