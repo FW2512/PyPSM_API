@@ -4,6 +4,7 @@ from .. import schemas, passutil, database
 
 router = APIRouter(prefix="/users", tags=["Users"])
 
+
 @router.post("/signup", response_model=schemas.UserInfo, status_code=status.HTTP_201_CREATED)
 def signup(user: schemas.Signup):
     user.password = passutil.encrypt_password(user.password)
