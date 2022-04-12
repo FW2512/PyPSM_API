@@ -1,5 +1,5 @@
 from fastapi import APIRouter, status, HTTPException
-from .. import schemas, passutil, database
+from .. import schemas, passutil, database, oauth2
 
 
 router = APIRouter(prefix="/users", tags=["Users"])
@@ -18,3 +18,18 @@ def signup(user: schemas.Signup):
     except Exception as e:
         print(e)
         raise HTTPException(status.HTTP_406_NOT_ACCEPTABLE, {"details":"username or email already exists!"})
+
+
+@router.post("/login", response_model=schemas.Token)
+def login(user_info: schemas.login):
+    database.cursor.execute("SELECT user_id, email_address, password FROM users WHERE email_address = %s", [user_info.email])
+    recived_user_info = database.cursor.fetchone()
+    if recived_user_info:
+        if passutil.password_validation(user_info.password, recived_user_info["password"]):
+            access_token = oauth2.create_jwt_token({"id": recived_user_info["user_id"], 
+                                     "email": recived_user_info["email_address"]})
+            return {"access_token": access_token, "token_type": "bearer"}
+        else:
+            raise HTTPException(status.HTTP_403_FORBIDDEN, detail="Invaild password!")
+    else:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="email address not found!")
