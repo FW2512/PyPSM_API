@@ -1,7 +1,10 @@
-from fastapi import FastAPI, APIRouter
-
+from fastapi import FastAPI
+from .routers import users, set_machine_info, get_machine_info
 
 app = FastAPI()
+app.include_router(users.router)
+app.include_router(set_machine_info.router)
+app.include_router(get_machine_info.router)
 
 
 @app.get("/")
