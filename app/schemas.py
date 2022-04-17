@@ -46,3 +46,7 @@ class GetMachineInfo(BaseModel):
     battery_info: str | None
     ram_info: str | None
 
+class MachineStatus(BaseModel):
+    user_id: int
+    online: bool | None
+    shutdown: bool | None
