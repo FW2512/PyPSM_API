@@ -8,7 +8,7 @@ SECRET_KEY = config.settings.secret_key
 ALGORITHM = config.settings.algorithm
 EXPIRATION_TIME = config.settings.expiration_time
 
-oauth2_schema = OAuth2PasswordBearer(tokenUrl="login")
+oauth2_schema = OAuth2PasswordBearer(tokenUrl="users\login")
 
 
 def create_jwt_token(data: dict):
