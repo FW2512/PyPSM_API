@@ -50,4 +50,18 @@ machine_info_table = """CREATE TABLE IF NOT EXISTS public.machine_info
                 );"""
 cursor.execute(machine_info_table)
 
+machine_status_table = """CREATE TABLE IF NOT EXISTS public.machine_status
+(
+    user_id integer NOT NULL UNIQUE,
+    online boolean DEFAULT NULL,
+    shutdown boolean DEFAULT NULL,
+    PRIMARY KEY (user_id),
+    CONSTRAINT user_id FOREIGN KEY (user_id)
+        REFERENCES public.users (user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+        NOT VALID
+);"""
+cursor.execute(machine_status_table)
+
 conn.commit()
