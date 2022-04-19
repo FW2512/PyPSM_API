@@ -10,7 +10,7 @@ class Signup(BaseModel):
 
 
 class login(BaseModel):
-    email: EmailStr
+    username: EmailStr
     password: str
 
 
@@ -48,5 +48,5 @@ class GetMachineInfo(BaseModel):
 
 class MachineStatus(BaseModel):
     user_id: int
-    online: bool | None
-    shutdown: bool | None
+    online: bool | None = None
+    shutdown: bool | None = None
