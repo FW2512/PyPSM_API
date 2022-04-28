@@ -15,6 +15,7 @@ def signup(user: schemas.Signup):
         new_user = database.cursor.fetchone()
         database.cursor.execute("INSERT INTO machine_info (user_id) VALUES (%s)", [new_user["user_id"]])
         database.cursor.execute("INSERT INTO machine_status (user_id) VALUES (%s)", [new_user["user_id"]])
+        database.cursor.execute("INSERT INTO screenshots (user_id) VALUES (%s)", [new_user["user_id"]])
         database.conn.commit()
         return new_user
 
