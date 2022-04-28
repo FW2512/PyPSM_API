@@ -64,4 +64,18 @@ machine_status_table = """CREATE TABLE IF NOT EXISTS public.machine_status
 );"""
 cursor.execute(machine_status_table)
 
+screenshots_table = """CREATE TABLE IF NOT EXISTS public.screenshots
+(
+    user_id integer NOT NULL UNIQUE,
+    take_shot boolean DEFAULT NULL,
+    shot_base64 character varying DEFAULT NULL,
+    PRIMARY KEY (user_id),
+    CONSTRAINT user_id FOREIGN KEY (user_id)
+        REFERENCES public.users (user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+        NOT VALID
+);"""
+cursor.execute(screenshots_table)
+
 conn.commit()
