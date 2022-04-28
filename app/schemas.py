@@ -54,4 +54,13 @@ class GetMachineStatus(BaseModel):
 class SetMachineStatus(BaseModel):
     online: bool | None = None
     shutdown: bool | None = None
+    
+class GetScreenshots(BaseModel):
+    user_id: int
+    take_shot: bool | None = True
+    shot_base64: str | None
+
+class SetScreenshots(BaseModel):
+    take_shot: bool | None = False
+    shot_base64: str | None = None
 
